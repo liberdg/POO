@@ -15,6 +15,10 @@ public class CmMV extends Commande{
     private String nouveauNom;
     @Override
     public void executer() {
+        if(ancienNom == null || nouveauNom == null){
+            System.out.println("Parametres manquants");
+            return;
+        }
         Fichier fichier = Navigateur.getInstance().getRepertoireCourant().getFichierParNom(ancienNom);
         if(fichier == null){
             System.out.println("Fichier inexistant");
@@ -34,8 +38,10 @@ public class CmMV extends Commande{
 
     @Override
     public void setParametres(String[] parametres) {
-        this.ancienNom = parametres[0];
-        this.nouveauNom = parametres[1];
+        if(parametres != null && parametres.length >= 2){
+            this.ancienNom = parametres[0];
+            this.nouveauNom = parametres[1];
+        }
         
     }
     

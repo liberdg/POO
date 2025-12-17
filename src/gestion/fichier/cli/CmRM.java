@@ -14,6 +14,10 @@ public class CmRM extends Commande{
     private String nom;
     @Override
     public void executer() {
+        if(nom == null){
+            System.out.println("Parametres manquants");
+            return;
+        }
         Fichier fichier = Navigateur.getInstance().getRepertoireCourant().getFichierParNom(nom);
         if(fichier == null){
             System.out.println("Fichier inexistant");
@@ -24,7 +28,9 @@ public class CmRM extends Commande{
 
     @Override
     public void setParametres(String[] parametres) {
-        this.nom = parametres[0];
+        if(parametres != null && parametres.length >= 1){
+            this.nom = parametres[0];
+        }
         
     }
     

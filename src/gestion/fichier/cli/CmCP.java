@@ -17,6 +17,10 @@ public class CmCP extends Commande{
     private String nomDestination;
     @Override
     public void executer() {
+        if(nomSource == null || nomDestination == null){
+            System.out.println("Parametres manquants");
+            return;
+        }
         Fichier fichierSource = Navigateur.getInstance().getRepertoireCourant().getFichierParNom(nomSource);
         if(fichierSource == null){
             System.out.println("Fichier source inexistant");
@@ -35,8 +39,10 @@ public class CmCP extends Commande{
 
     @Override
     public void setParametres(String[] parametres) {
-        this.nomSource = parametres[0];
-        this.nomDestination = parametres[1];
+        if(parametres != null && parametres.length >= 2){
+            this.nomSource = parametres[0];
+            this.nomDestination = parametres[1];
+        }
         
     }
     

@@ -24,6 +24,10 @@ public class FichierSimple extends Fichier{
         return donnee.length();
     }
     
+    @Override
+    public boolean estRepertoire(){
+        return false;
+    }
     
     
 }

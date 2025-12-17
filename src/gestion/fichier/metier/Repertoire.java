@@ -47,7 +47,7 @@ public class Repertoire extends Fichier{
              return false;
          }
          for(Fichier f: fichiers){
-             if(f.estRepertoire()&& f.getNom().equals(nom)){
+             if(!f.estRepertoire()&& f.getNom().equals(nom)){
                  return true;
              }
          }

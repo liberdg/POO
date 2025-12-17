@@ -99,6 +99,30 @@ public class Repertoire extends Fichier{
     public List<Fichier> getFichier(){
         return this.fichiers;
     }
+    
+    public void supprimerFichier(String nom){
+        if(nom == null){
+            return;
+        }
+        for(int i = 0; i < fichiers.size(); i++){
+            if(fichiers.get(i).getNom().equals(nom)){
+                fichiers.remove(i);
+                return;
+            }
+        }
+    }
+    
+    public Fichier getFichierParNom(String nom){
+        if(nom == null){
+            return null;
+        }
+        for(Fichier f: fichiers){
+            if(f.getNom().equals(nom)){
+                return f;
+            }
+        }
+        return null;
+    }
 
     
     

@@ -11,15 +11,25 @@ package gestion.fichier.cli;
  * @author liber
  */
 public class CmLS extends Commande{
-   // private String nom;
+    private String chemin;
     @Override
     public void executer() {
-        Navigateur.getInstance().getRepertoireCourant().afficherContenu();
+        if(chemin == null){
+            Navigateur.getInstance().getRepertoireCourant().afficherContenu();
+        }else{
+            if(Navigateur.getInstance().getRepertoireCourant().existeRepertoire(chemin)){
+                Navigateur.getInstance().getRepertoireCourant().getRepertoire(chemin).afficherContenu();
+            }else{
+                System.out.println("Repertoire inexistant");
+            }
+        }
     }
 
     @Override
     public void setParametres(String[] parametres) {
-        //this.nom= parametres[0];
+        if(parametres != null && parametres.length > 0){
+            this.chemin = parametres[0];
+        }
         
     }
     

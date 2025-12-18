@@ -1,0 +1,27 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package gestion.fichier.cli;
+
+/**
+ *
+ * @author liber
+ */
+public class CmExisteRepertoire extends Commande {
+    private String nom;
+    
+    @Override
+    public void executer() {
+        if (Navigateur.getInstance().getRepertoireCourant().existeRepertoire(nom)) {
+            System.out.println("Le repertoire " + this.nom + " existe");
+        } else {
+            System.out.println("Le repertoire " + this.nom + " n'existe pas");
+        }
+    }
+
+    @Override
+    public void setPararmetres(String[] parametres) {
+        this.nom = parametres[0];
+    }
+}

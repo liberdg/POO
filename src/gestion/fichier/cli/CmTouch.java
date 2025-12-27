@@ -4,6 +4,8 @@
  */
 package gestion.fichier.cli;
 
+import java.nio.file.FileAlreadyExistsException;
+
 
 /**
  *
@@ -14,11 +16,15 @@ public class CmTouch extends Commande {
 
     @Override
     public void executer() {
+        try{
         if (!Navigateur.getInstance().getRepertoireCourant().existeFichierSimple(nom)) {
             Navigateur.getInstance().getRepertoireCourant().ajouterFichierSimple(nom);
         } else {
-            System.out.println("Le fichier existe déjà.");
-        }
+          throw new FileAlreadyExistsException("Un fichier ou répertoire de ce nom existe déjà !");
+            }
+        } catch (FileAlreadyExistsException e) {
+            System.out.println(e.getMessage());
+        } 
     }
 
     @Override

@@ -8,7 +8,9 @@ package gestion.fichier.cli;
  *
  * @author liber
  */
-public abstract class Commande {
-    public abstract void executer();
-    public abstract void setPararmetres(String[] parametres);
+public class FileNotFoundExistsException extends Exception {
+
+    public FileNotFoundExistsException(String le_fichier_ou_dossier_source_nexiste_pas_) {
+    }
+    
 }

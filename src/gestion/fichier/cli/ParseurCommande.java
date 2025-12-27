@@ -8,7 +8,7 @@ import java.util.Arrays;
 
 /**
  *
- * @author tkossi
+ * @author liber
  */
 public class ParseurCommande {
     public Commande parser(String strCommande) {

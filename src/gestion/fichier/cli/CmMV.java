@@ -5,55 +5,63 @@
 package gestion.fichier.cli;
 
 import gestion.fichier.metier.Fichier;
+import gestion.fichier.metier.Repertoire;
+import java.nio.file.FileAlreadyExistsException;
 
-/**
- *
- * @author liber
- */
+
 public class CmMV extends Commande {
-    private String ancienNom;
-    private String nouveauNom;
-     @Override
-    public void executer() {
-          // on a bien les deux parametres ? 
-        if(ancienNom == null || nouveauNom == null){
-            System.out.println("Parametres manquants");
-            return;
-        }
-        
-        //  le fichier a deplacer existe ?
-         Fichier fichier = Navigateur. getInstance().getRepertoireCourant().getFichierParNom(ancienNom);
-        if(fichier == null){
-            System.out.println("Fichier inexistant");
-            return;
-        }
-        
-        // verifier si  le nouveau nom n'est pas deja pris 
-        if(Navigateur. getInstance().getRepertoireCourant().getFichierParNom(nouveauNom) != null){
-            System. out.println("Fichier destination existant");
-            return;
-        }
-        
-        // On cree la copie selon le type
-        if(fichier.estRepertoire()){
-            Navigateur.getInstance().getRepertoireCourant().ajouterRepertoire(nouveauNom);
-        }else{
-            Navigateur.getInstance().getRepertoireCourant().ajouterFichierSimple(nouveauNom);
-        }
-        
-        // on supprime l'original 
-        Navigateur.getInstance().getRepertoireCourant().supprimerFichier(ancienNom);
-        
-        System.out.println("Deplacement effectue");
-    }
+    private String source;
+    private String dest;
+
     @Override
-    public void setPararmetres(String[] parametres) {
-        if(parametres != null && parametres. length >= 2){
-            this.ancienNom = parametres[0];
-            this.nouveauNom = parametres[1];
+    public void executer() {
+        try {
+            if (source == null || source.isEmpty()) {
+                throw new IllegalArgumentException("La source est obligatoire !");
+            }
+
+            // Récupérer le dossier courant
+            Repertoire repCourant = Navigateur.getInstance().getRepertoireCourant();
+
+            // Chercher le fichier à déplacer par son chemin 
+            Fichier fichierSource = repCourant.getFichierParNom(source);
+            if (fichierSource == null) {
+                throw new FileNotFoundExistsException("Le fichier ou dossier source n'existe pas !");
+            }
+
+            // trouver le rep destination 
+            Repertoire destination;
+            if (dest == null || dest.isEmpty()) {
+                destination = repCourant;
+            } else {
+                Fichier cible = repCourant.getFichierParNom(dest);
+                if (cible == null || !cible.estRepertoire()) {
+                    throw new FileNotFoundExistsException("La destination doit exister et être un répertoire !");
+                }
+                destination = (Repertoire) cible;
+            }
+
+            // Vérifier qu'un même nom n'existe pas dans la destination
+            if (destination.getFichierParNom(fichierSource.getNom()) != null) {
+                throw new FileAlreadyExistsException("Un fichier ou dossier du même nom existe déjà dans la destination !");
+            }
+
+            // Supprimer du répertoire courant et ajouter à la destination
+            repCourant.supprimerFichier(source);
+            destination.getFichiers().add(fichierSource);
+
+            System.out.println("Déplacement effectué !");
+        } catch (FileNotFoundExistsException  e) {
+            System.out.println(e.getMessage());
+        } catch (Exception e) {
+            System.out.println("Erreur inattendue : " + e.getMessage());
         }
-        
     }
-    
-    
-}
+
+    @Override
+   public void setPararmetres(String[] parametres) {
+        if(parametres != null && parametres. length >= 2){
+            this.source = parametres[0];
+            this.dest = parametres[1];
+        }
+}}

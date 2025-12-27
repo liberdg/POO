@@ -4,7 +4,6 @@
  */
 package gestion.fichier.cli;
 
-import gestion.fichier.metier.Repertoire;
 import java.io.FileNotFoundException;
 
 /**
@@ -17,6 +16,10 @@ public class CmCD extends Commande {
     @Override
     public void executer() {
         try{
+             if (nom.equals(".")) {
+                // On ne fait rien, on reste ici
+                return;
+            }
         Navigateur.getInstance().changerRepertoire(nom);
             
         }catch(FileNotFoundException e){

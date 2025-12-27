@@ -83,6 +83,9 @@ public abstract class Fichier implements Serializable {
     public String getNom() {
         return this.nom;
     }
+    public void setNom(String nom){
+        this.nom=nom;
+    }
     
     public Repertoire getRepertoireParent() {
         return this.repertoireParent;

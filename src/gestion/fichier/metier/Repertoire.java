@@ -38,6 +38,7 @@ public class Repertoire extends Fichier {
         for (Fichier fichier : fichiers) {
             System.out.print(fichier.getNom() + "\t");
         }
+        System. out.println();
     }
 
     public List<Fichier> getFichiers() {
@@ -94,17 +95,22 @@ public class Repertoire extends Fichier {
        
 //SUPPRIMER UN FICHIER
    
-    public void supprimerFichier(String nom){
-        if(nom == null){
-            return;
-        }
-        for(int i = 0; i < fichiers. size(); i++){
-            if(fichiers.get(i).getNom().equals(nom)){
-                fichiers. remove(i);
-                return;
-            }
+    public void supprimerFichier(String nom) {
+    if (nom == null) {
+        return;
+    }
+
+    Fichier aSupprimer = null;
+    for (Fichier f : fichiers) {
+        if (f.getNom().equals(nom)) {
+            aSupprimer = f;
+            break;
         }
     }
+    if (aSupprimer != null) {
+        fichiers.remove(aSupprimer);
+    }
+}
     
     //Chercher un fichier par son nom
     public Fichier getFichierParNom(String nom){
@@ -119,6 +125,7 @@ public class Repertoire extends Fichier {
         return null;
     }
 
+    
     
     
 

@@ -4,6 +4,8 @@
  */
 package gestion.fichier.cli;
 
+import java.nio.file.FileAlreadyExistsException;
+
 /**
  *
  * @author liber
@@ -13,12 +15,19 @@ public class CmMKDIR extends Commande {
 
     @Override
     public void executer() {
+        
+        try{
+            
+        
         if(! Navigateur.getInstance().getRepertoireCourant().existeRepertoire(nom)){
             
         Navigateur.getInstance().getRepertoireCourant().ajouterRepertoire(nom);
         }else{
-            System.out.println("Repertoire existant");
-        }
+            throw new FileAlreadyExistsException("Un fichier ou répertoire de ce nom existe déjà !");
+            }
+        } catch (FileAlreadyExistsException e) {
+            System.out.println(e.getMessage());
+        } 
     }
 
     @Override

@@ -5,56 +5,76 @@
 package gestion.fichier.cli;
 
 import gestion.fichier.metier.Fichier;
+import gestion.fichier.metier.Repertoire;
+import java.nio.file.FileAlreadyExistsException;
 
 /**
  *
  * @author liber
  */
-public class CmCP extends Commande{
-    private String nomSource;
-    private String nomDestination;
-     @Override
+public class CmCP extends Commande {
+   private String source;
+    private String destination;
+
+    @Override
     public void executer() {
-        //  on a bien les deux parametres ? 
-        if(nomSource == null || nomDestination == null){
-            System.out.println("Parametres manquants");
-            return;
+        try {
+           
+            if (source == null || source.equals("")) {
+                throw new IllegalArgumentException("Le fichier source est obligatoire.");
+            }
+
+            // Prendre le dossier courant
+            Repertoire rep = Navigateur.getInstance().getRepertoireCourant();
+
+            //  Trouver le fichier source
+            Fichier fichierSource = rep.getFichierParNom(source);
+            if (fichierSource == null) {
+                throw new FileNotFoundExistsException("Le fichier source n'existe pas.");
+            }
+
+            //  Destination : dossier courant si vide
+            Repertoire dossierDestination = rep;
+            String nomFinal = fichierSource.getNom();
+
+            if (destination != null && !destination.equals("")) {
+                // Si on trouve un répertoire du nom destination
+                Fichier destCible = rep.getFichierParNom(destination);
+                if (destCible != null && destCible.estRepertoire()) {
+                    dossierDestination = (Repertoire) destCible;
+                } else if (destCible == null) {
+                    // destination est le nouveau nom
+                    nomFinal = destination;
+                } else {
+                    throw new FileNotFoundExistsException("Destination invalide.");
+                }
+            }
+
+            //  Existence d'un fichier du même nom à destination ?
+            if (dossierDestination.getFichierParNom(nomFinal) != null) {
+                throw new FileAlreadyExistsException("Un fichier du même nom existe déjà dans le répertoire de destination !");
+            }
+
+            //  Créer la copie 
+            if (fichierSource.estRepertoire()) {
+                dossierDestination.ajouterRepertoire(nomFinal);
+            } else {
+                dossierDestination.ajouterFichierSimple(nomFinal);
+            }
+
+            System.out.println("Copie effectuée !");
+        } catch (FileNotFoundExistsException  e) {
+            System.out.println(e.getMessage());
+        } catch (Exception e) {
+            System.out.println("Erreur : " + e.getMessage());
         }
-        
-        //  le fichier source existe ?
-         Fichier fichierSource = Navigateur.getInstance().getRepertoireCourant().getFichierParNom(nomSource);
-        if(fichierSource == null){
-            System.out.println("Fichier source inexistant");
-            return;
-        }
-        
-        //  la destination n'existe pas deja ? 
-        if(Navigateur. getInstance().getRepertoireCourant().getFichierParNom(nomDestination) != null){
-            System.out.println("Fichier destination existant");
-            return;
-        }
-        
-        // On cree la copie selon le type du fichier source
-        if(fichierSource.estRepertoire()){
-            // C'est un repertoire, on cree un repertoire
-            Navigateur.getInstance().getRepertoireCourant().ajouterRepertoire(nomDestination);
-        }else{
-            // C'est un fichier simple, on cree un fichier simple
-            Navigateur.getInstance().getRepertoireCourant().ajouterFichierSimple(nomDestination);
-        }
-        
-        System.out.println("Copie effectuee");
-    
     }
 
     @Override
     public void setPararmetres(String[] parametres) {
-        if(parametres != null && parametres.length >= 2){
-            this.nomSource = parametres[0];
-            this.nomDestination = parametres[1];
+      if(parametres != null && parametres. length >= 2){
+            this.source = parametres[0];
+            this.destination = parametres[1];
         }
-        
-    }
-    
-    
+}
 }

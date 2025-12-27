@@ -5,42 +5,41 @@
 package gestion.fichier.cli;
 
 import gestion.fichier.metier.Fichier;
+import gestion.fichier.metier.Repertoire;
 
 /**
  *
  * @author liber
  */
-public class CmRM extends Commande{
+public class CmRM extends Commande {
     private String nom;
-     @Override
+
+    @Override
     public void executer() {
-        //  on a bien le parametre ?
-        if(nom == null){
-            System.out.println("Parametres manquants");
+        if(nom == null) {
+            System.out.println("ERREUR: Veiller entrer le nom du Fichier a supprimer");
             return;
         }
-        
-        //  le fichier existe ?
-         Fichier fichier = Navigateur. getInstance().getRepertoireCourant().getFichierParNom(nom);
-        if(fichier == null){
-            System.out. println("Fichier inexistant");
+
+        Repertoire r = Navigateur.getInstance().getRepertoireCourant();
+
+        if(r.getFichierParNom(nom) == null) {
+            System.out.println("Le Fichier n'existe pas");
             return;
         }
-        
-        // On supprime le fichier
-        Navigateur.getInstance().getRepertoireCourant().supprimerFichier(nom);
-        
-        System.out.println("Suppression effectuee");
-    
+
+        try {
+            r.supprimerFichier(nom);
+            System.out.println("Suppression effectuee");
+        } catch(Exception e) {
+            // En cas d'erreur
+            System.out.println("Erreur lors de la suppression : " + e.getMessage());
+        }
     }
 
     @Override
-    public void setPararmetres(String[] parametres) {
-        if(parametres != null && parametres.length >= 1){
-            this.nom = parametres[0];
-        }
-        
+    public void setPararmetres(String[] params) {
+        if(params != null && params.length > 0)
+            nom = params[0];
     }
-    
-    
 }

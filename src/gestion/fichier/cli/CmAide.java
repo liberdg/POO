@@ -6,13 +6,13 @@ package gestion.fichier.cli;
 
 /**
  *
- * @author tkossi
+ * @author liber
  */
 public class CmAide extends Commande {
 
     @Override
     public void executer() {
-       System. out.println("=== AIDE - Liste des commandes ===");
+       System. out.println("AIDE - Liste des commandes ");
         System.out.println("exit   :  Quitter le programme");
         System.out.println("help   : Afficher cette aide");
         System.out. println("mkdir  :  Creer un repertoire (mkdir nomDossier)");

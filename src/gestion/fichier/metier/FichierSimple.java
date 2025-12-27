@@ -8,7 +8,7 @@ import java.io.Serial;
 
 /**
  *
- * @author tkossi
+ * @author liber
  */
 public class FichierSimple extends Fichier {
     @Serial

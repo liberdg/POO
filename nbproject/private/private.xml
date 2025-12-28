@@ -14,6 +14,14 @@
             <file>file:/C:/Users/liber/OneDrive/Bureau/gestion-fichier/src/gestion/fichier/cli/Navigateur.java</file>
             <file>file:/C:/Users/liber/OneDrive/Bureau/gestion-fichier/src/gestion/fichier/Main.java</file>
             <file>file:/C:/Users/liber/OneDrive/Bureau/gestion-fichier/src/gestion/fichier/metier/Fichier.java</file>
+            <file>file:/C:/Users/liber/OneDrive/Bureau/gestion-fichier/src/gestion/fichier/cli/CmRM.java</file>
+            <file>file:/C:/Users/liber/OneDrive/Bureau/gestion-fichier/src/gestion/fichier/cli/CmMV.java</file>
+            <file>file:/C:/Users/liber/OneDrive/Bureau/gestion-fichier/src/gestion/fichier/cli/CmCP.java</file>
+            <file>file:/C:/Users/liber/OneDrive/Bureau/gestion-fichier/src/gestion/fichier/cli/CmExisteRepertoire.java</file>
+            <file>file:/C:/Users/liber/OneDrive/Bureau/gestion-fichier/src/gestion/fichier/cli/CmInconnue.java</file>
+            <file>file:/C:/Users/liber/OneDrive/Bureau/gestion-fichier/src/gestion/fichier/cli/CmQuitter.java</file>
+            <file>file:/C:/Users/liber/OneDrive/Bureau/gestion-fichier/src/gestion/fichier/cli/Commande.java</file>
+            <file>file:/C:/Users/liber/OneDrive/Bureau/gestion-fichier/src/gestion/fichier/cli/ParseurCommande.java</file>
         </group>
     </open-files>
 </project-private>

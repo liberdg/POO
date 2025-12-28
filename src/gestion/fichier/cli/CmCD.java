@@ -17,7 +17,7 @@ public class CmCD extends Commande {
     public void executer() {
         try{
              if (nom.equals(".")) {
-                // On ne fait rien, on reste ici
+               
                 return;
             }
         Navigateur.getInstance().changerRepertoire(nom);

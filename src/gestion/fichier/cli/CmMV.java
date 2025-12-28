@@ -16,7 +16,7 @@ public class CmMV extends Commande {
     @Override
     public void executer() {
         try {
-            if (source == null || source.isEmpty()) {
+            if (source == null || source.equals("")) {
                 throw new IllegalArgumentException("La source est obligatoire !");
             }
 
@@ -31,7 +31,7 @@ public class CmMV extends Commande {
 
             // trouver le rep destination 
             Repertoire destination;
-            if (dest == null || dest.isEmpty()) {
+            if (dest == null || dest.equals("")) {
                 destination = repCourant;
             } else {
                 Fichier cible = repCourant.getFichierParNom(dest);

@@ -38,8 +38,8 @@ public class CmRM extends Commande {
     }
 
     @Override
-    public void setPararmetres(String[] params) {
-        if(params != null && params.length > 0)
-            nom = params[0];
+    public void setPararmetres(String[] parametres) {
+        if(parametres != null && parametres.length > 0)
+            nom = parametres[0];
     }
 }

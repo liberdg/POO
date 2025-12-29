@@ -24,8 +24,8 @@ public class CmLS extends Commande {
                 try {
                     // Le repertoire existe, on affiche son contenu
                     Navigateur.getInstance().getRepertoireCourant().getRepertoire(chemin).afficherContenu();
-                } catch (FileNotFoundException ex) {
-                    System.getLogger(CmLS.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+                } catch (FileNotFoundException e) {
+                    System.out.println(e.getMessage());
                 }
             }else{
                 // Le repertoire n'existe pas

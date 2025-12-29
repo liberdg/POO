@@ -6,6 +6,7 @@ package gestion.fichier.cli;
 
 import gestion.fichier.metier.Fichier;
 import gestion.fichier.metier.Repertoire;
+import java.io.FileNotFoundException;
 import java.nio.file.FileAlreadyExistsException;
 
 
@@ -17,7 +18,7 @@ public class CmMV extends Commande {
     public void executer() {
         try {
             if (source == null || source.equals("")) {
-                throw new IllegalArgumentException("La source est obligatoire !");
+                throw new IllegalArgumentException("La source est obligatoire ");
             }
 
             // Récupérer le dossier courant
@@ -26,7 +27,7 @@ public class CmMV extends Commande {
             // Chercher le fichier à déplacer par son chemin 
             Fichier fichierSource = repCourant.getFichierParNom(source);
             if (fichierSource == null) {
-                throw new FileNotFoundExistsException("Le fichier ou dossier source n'existe pas !");
+                throw new FileNotFoundException("Le fichier ou dossier source n'existe pas ");
             }
 
             // trouver le rep destination 
@@ -36,14 +37,14 @@ public class CmMV extends Commande {
             } else {
                 Fichier cible = repCourant.getFichierParNom(dest);
                 if (cible == null || !cible.estRepertoire()) {
-                    throw new FileNotFoundExistsException("La destination doit exister et être un répertoire !");
+                    throw new FileNotFoundException("La destination doit exister et être un répertoire ");
                 }
                 destination = (Repertoire) cible;
             }
 
             // Vérifier qu'un même nom n'existe pas dans la destination
             if (destination.getFichierParNom(fichierSource.getNom()) != null) {
-                throw new FileAlreadyExistsException("Un fichier ou dossier du même nom existe déjà dans la destination !");
+                throw new FileAlreadyExistsException("Un fichier ou dossier du même nom existe déjà dans la destination ");
             }
 
             // Supprimer du répertoire courant et ajouter à la destination
@@ -51,7 +52,7 @@ public class CmMV extends Commande {
             destination.getFichiers().add(fichierSource);
 
             System.out.println("Déplacement effectué !");
-        } catch (FileNotFoundExistsException  e) {
+        } catch (FileNotFoundException  e) {
             System.out.println(e.getMessage());
         } catch (Exception e) {
             System.out.println("Erreur inattendue : " + e.getMessage());

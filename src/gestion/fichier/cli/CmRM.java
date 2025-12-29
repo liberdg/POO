@@ -4,7 +4,6 @@
  */
 package gestion.fichier.cli;
 
-import gestion.fichier.metier.Fichier;
 import gestion.fichier.metier.Repertoire;
 
 /**
@@ -32,7 +31,7 @@ public class CmRM extends Commande {
             r.supprimerFichier(nom);
             System.out.println("Suppression effectuee");
         } catch(Exception e) {
-            // En cas d'erreur
+            
             System.out.println("Erreur lors de la suppression : " + e.getMessage());
         }
     }
